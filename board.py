@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-from enum import Enum, unique
 from random import Random
 
 rand = Random()
 
 DEBUG = False
 
-class Direction(Enum):
+class Direction(object):
     up    = 1
     down  = 2
     left  = 3
