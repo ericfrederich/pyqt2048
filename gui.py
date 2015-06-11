@@ -13,6 +13,21 @@ DMAP = {
     Qt.Key_Right: Direction.right,
 }
 
+styles = {
+   0: "QLabel { background-color : #ffffff; color : #000000; }",
+   2: "QLabel { background-color : #dddddd; color : #000000; }",
+   4: "QLabel { background-color : #cccccc; color : #000000; }",
+   8: "QLabel { background-color : #9999cc; color : #000000; }",
+  16: "QLabel { background-color : #6666cc; color : #FFFFFF; }",
+  32: "QLabel { background-color : #0000cc; color : #FFFFFF; }",
+  64: "QLabel { background-color : #0066cc; color : #FFFFFF; }",
+ 128: "QLabel { background-color : #0099cc; color : #000000; }",
+ 256: "QLabel { background-color : #00cccc; color : #000000; }",
+ 512: "QLabel { background-color : #00ffcc; color : #000000; }",
+1024: "QLabel { background-color : #66ffcc; color : #000000; }",
+2048: "QLabel { background-color : #99ffcc; color : #000000; }",
+}
+
 class BoardWidget(QWidget):
     def __init__(self, board, parent=None):
         super(BoardWidget, self).__init__(parent)
@@ -24,6 +39,7 @@ class BoardWidget(QWidget):
             row_labels = []
             for c, col in enumerate(row):
                 label = QLabel()
+                label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
                 row_labels.append(label)
                 layout.addWidget(label, r, c)
             self.labels.append(row_labels)
@@ -34,7 +50,9 @@ class BoardWidget(QWidget):
     def update(self):
         for r, row in enumerate(self.board.data):
             for c, col in enumerate(row):
-                self.labels[r][c].setText(str(col) if col else '')
+                l = self.labels[r][c]
+                l.setText(str(col) if col else '')
+                l.setStyleSheet(styles.get(col, ''))
 
     def keyPressEvent(self, event):
         key = event.key()
